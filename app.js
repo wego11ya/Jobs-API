@@ -24,7 +24,8 @@ const errorHandlerMiddleware = require("./middleware/error-handler");
 
 app.use(express.json());
 // extra security
-app.enable("trust proxy");
+// Set trust proxy to the specific number of reverse proxies
+app.set("trust proxy", 1);
 app.use(
   rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
