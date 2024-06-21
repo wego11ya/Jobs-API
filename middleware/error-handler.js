@@ -26,6 +26,12 @@ const errorHandlerMiddleware = (err, req, res, next) => {
       .join(", ");
   }
 
+  // Handle Mongoose cast error
+  if (err.name === "CastError") {
+    customError.statusCode = StatusCodes.NOT_FOUND;
+    customError.msg = `No item found with id : ${err.value}`;
+  }
+
   // return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ err });
   return res.status(customError.statusCode).json({ msg: customError.msg });
 };
