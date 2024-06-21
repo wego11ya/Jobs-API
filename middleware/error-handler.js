@@ -1,4 +1,4 @@
-const { CustomAPIError } = require("../errors");
+// const { CustomAPIError } = require("../errors");
 const { StatusCodes } = require("http-status-codes");
 const errorHandlerMiddleware = (err, req, res, next) => {
   let customError = {
@@ -6,9 +6,9 @@ const errorHandlerMiddleware = (err, req, res, next) => {
     msg: err.message || "Something went wrong, please try again",
   };
 
-  if (err instanceof CustomAPIError) {
-    return res.status(err.statusCode).json({ msg: err.message });
-  }
+  // if (err instanceof CustomAPIError) {
+  //   return res.status(err.statusCode).json({ msg: err.message });
+  // }
   // Handle Mongoose duplicate key error for 'email' field in User model
   if (err.code && err.code === 11000) {
     customError.statusCode = StatusCodes.BAD_REQUEST;
