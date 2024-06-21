@@ -17,6 +17,15 @@ const errorHandlerMiddleware = (err, req, res, next) => {
       err.keyValue
     )} must be unique, please choose another value`;
   }
+
+  // Handle Mongoose validation error
+  if (err.name === "ValidationError") {
+    customError.statusCode = StatusCodes.BAD_REQUEST;
+    customError.msg = Object.values(err.errors)
+      .map((item) => item.message)
+      .join(", ");
+  }
+
   // return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({ err });
   return res.status(customError.statusCode).json({ msg: customError.msg });
 };
